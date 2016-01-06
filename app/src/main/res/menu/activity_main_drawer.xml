@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/nav_home" android:icon="@android:drawable/ic_menu_camera"
+            android:title="Home" android:checked="true" />
+        <item android:id="@+id/nav_updates" android:icon="@android:drawable/ic_menu_gallery"
+            android:title="Updates" />
+        <item android:id="@+id/nav_photos" android:icon="@android:drawable/ic_menu_slideshow"
+            android:title="Photos" />
+        <item android:id="@+id/nav_videos" android:icon="@android:drawable/ic_menu_manage"
+            android:title="Videos" />
+    </group>
+
+
+    <item android:title="Magazines and NewsPaper">
+
+        <menu>
+            <group android:checkableBehavior="single">
+
+            <item android:id="@+id/nav_newspaper" android:icon="@android:drawable/ic_menu_camera"
+            android:title="NewsPaper" />
+        <item android:id="@+id/nav_magazine" android:icon="@android:drawable/ic_menu_gallery"
+            android:title="Magazine" />
+       </group>
+        </menu>
+    </item>
+
+</menu>
