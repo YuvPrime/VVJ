@@ -23,6 +23,7 @@ import com.example.yuvaraj.myapplication.Constant;
 import com.example.yuvaraj.myapplication.R;
 import com.example.yuvaraj.myapplication.adapter.RecyclerUpdateAdapter;
 import com.example.yuvaraj.myapplication.decorator.VerticalSpaceItemDecoration;
+import com.example.yuvaraj.myapplication.helpers.VolleyHelper;
 import com.example.yuvaraj.myapplication.model.Model;
 import com.example.yuvaraj.myapplication.volley.AppController;
 
@@ -49,6 +50,7 @@ public class UpdatesFragment extends Fragment {
     int pastVisiblesItems, visibleItemCount, totalItemCount;
     LinearLayoutManager mLayoutManager;
     boolean userScrolled = false;
+    VolleyHelper volleyHelper = new VolleyHelper();
 
 
     @Override
@@ -61,176 +63,139 @@ public class UpdatesFragment extends Fragment {
         progressDialog.setTitle("Loading");
         progressDialog.setMessage("Please wait...");
         progressDialog.show();
-        JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
-                Constant.updates_url, (String)null,
-                new Response.Listener<JSONArray>() {
 
-                    @Override
-                    public void onResponse(JSONArray response) {
 
-                        try {
+        // make json array request
 
-                            for (int i = 0; i < response.length(); i++){
-
-                                Model updateModel = new Model();
-                                JSONObject object = response.getJSONObject(i);
-                                updateModel.setContent(object.getString("content"));
-                                updateModel.setImage(object.getString("image"));
-                                Date date = null;
-                                long timeInMillisSinceEpoch = 0;
-                                try {
-                                    date = sdf.parse(object.getString("created"));
-                                     timeInMillisSinceEpoch = date.getTime();
-                                } catch (ParseException e) {
-                                    e.printStackTrace();
-                                }
-                                updateModel.setDatePosted(timeInMillisSinceEpoch);
-
-                                updateArrayList.add(updateModel);
-
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                        adapter.notifyDataSetChanged();
-                        progressDialog.hide();
-
-                    }
-                }, new Response.ErrorListener() {
+        volleyHelper.makeJsonArrayRequest(getActivity(), Constant.updates_url, new VolleyHelper.VolleyArrayResponseListener() {
 
             @Override
-            public void onErrorResponse(VolleyError error) {
+            public void onResponse(JSONArray response) {
+                try {
+                    for (int i = 0; i < response.length(); i++) {
+                        Model updateModel = new Model();
+                        JSONObject object = response.getJSONObject(i);
+                        updateModel.setContent(object.getString("content"));
+                        updateModel.setImage(object.getString("image"));
+                        Date date = null;
+                        long timeInMillisSinceEpoch = 0;
+                        try {
+                            date = sdf.parse(object.getString("created"));
+                            timeInMillisSinceEpoch = date.getTime();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        updateModel.setDatePosted(timeInMillisSinceEpoch);
+                        updateArrayList.add(updateModel);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                adapter.notifyDataSetChanged();
+                progressDialog.hide();
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+
                 VolleyLog.d("tt", "Error: " + error.getMessage());
                 VolleyLog.d("TA", "error msg" + error.networkResponse);
                 Log.d("track", "Error");
 
-                if(error.networkResponse == null){
-                    Log.d("track","Time out");
+                if (error.networkResponse == null) {
+                    Log.d("track", "Time out");
                 }
                 progressDialog.hide();
             }
+
         });
-        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        AppController.getInstance().addToRequestQueue(jsonObjReq, "tag_json_obj");
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         View view = inflater.inflate(R.layout.fragment_updates, container, false);
 
         mRecyclerView = (RecyclerView)view.findViewById(R.id.updates);
-
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration(8));
-
-
         adapter = new RecyclerUpdateAdapter(getActivity(), updateArrayList);
         mRecyclerView.setAdapter(adapter);
-        //adapter.notifyDataSetChanged();
 
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL)
-                {
+                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
                     userScrolled = true;
                 }
             }
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-
                 if (dy > 0) //check for scroll down
                 {
                     visibleItemCount = mLayoutManager.getChildCount();
                     totalItemCount = mLayoutManager.getItemCount();
                     pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
 
-                    Log.d("track", "visibleItemCount" +visibleItemCount);
-                    Log.d("track", "totalItemCount" +totalItemCount);
-                    Log.d("track", " First Visible Item Position " +pastVisiblesItems);
-
+                    // proceed if not already loading
                     if (!loading) {
 
-                        if ((visibleItemCount + pastVisiblesItems + 1) >= totalItemCount && userScrolled ) {
+                        if ((visibleItemCount + pastVisiblesItems + 1) >= totalItemCount && userScrolled) {
                             updateArrayList.add(null);
                             adapter.notifyItemInserted(updateArrayList.size());
+                            loading = true; // set loading to true to prevent concurrent too many load
 
-                            loading = true;
-                            userScrolled = false;
+                            // make json array request
 
-                            JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
-                                    Constant.updates_url, (String)null,
-                                    new Response.Listener<JSONArray>() {
-
-                                        @Override
-                                        public void onResponse(JSONArray response) {
-
-                                            try {
-
-                                                updateArrayList.remove(updateArrayList.size() - 1);
-                                                adapter.notifyItemRemoved(updateArrayList.size());
-
-                                                for (int i = 0; i < response.length(); i++){
-
-                                                    Model updateModel = new Model();
-                                                    JSONObject object = response.getJSONObject(i);
-                                                    updateModel.setContent(object.getString("content"));
-                                                    updateModel.setImage(object.getString("image"));
-                                                    Date date = null;
-                                                    long timeInMillisSinceEpoch = 0;
-                                                    try {
-                                                        date = sdf.parse(object.getString("created"));
-                                                        timeInMillisSinceEpoch = date.getTime();
-                                                    } catch (ParseException e) {
-                                                        e.printStackTrace();
-                                                    }
-                                                    updateModel.setDatePosted(timeInMillisSinceEpoch);
-
-                                                    updateArrayList.add(updateModel);
-
-
-                                                }
-
-                                            } catch (JSONException e) {
-                                                e.printStackTrace();
-                                            }
-
-                                            adapter.notifyDataSetChanged();
-                                            loading = false;
-
-                                        }
-                                    }, new Response.ErrorListener() {
+                            volleyHelper.makeJsonArrayRequest(getActivity(), Constant.updates_url, new VolleyHelper.VolleyArrayResponseListener() {
 
                                 @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    VolleyLog.d("tt", "Error: " + error.getMessage());
-                                    VolleyLog.d("TA", "error msg" + error.networkResponse);
-                                    Log.d("track", "Error");
+                                public void onResponse(JSONArray response) {
+                                    try {
 
-                                    if(error.networkResponse == null){
-                                        Log.d("track","Time out");
+                                        // remove the progress loader which is in last at updateArrayList
+                                        updateArrayList.remove(updateArrayList.size() - 1);
+                                        adapter.notifyItemRemoved(updateArrayList.size());
+
+                                        for (int i = 0; i < response.length(); i++) {
+                                            Model updateModel = new Model();
+                                            JSONObject object = response.getJSONObject(i);
+                                            updateModel.setContent(object.getString("content"));
+                                            updateModel.setImage(object.getString("image"));
+                                            Date date = null;
+                                            long timeInMillisSinceEpoch = 0;
+                                            try {
+                                                date = sdf.parse(object.getString("created"));
+                                                timeInMillisSinceEpoch = date.getTime();
+                                            } catch (ParseException e) {
+                                                e.printStackTrace();
+                                            }
+                                            updateModel.setDatePosted(timeInMillisSinceEpoch);
+                                            updateArrayList.add(updateModel);
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    adapter.notifyDataSetChanged();
+                                    loading = false;
+                                }
+
+                                @Override
+                                public void onError(VolleyError error) {
+                                    if (error.networkResponse == null) {
+                                        Log.d("track", "Time out");
                                     }
                                 }
                             });
-                            jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-                            AppController.getInstance().addToRequestQueue(jsonObjReq, "tag_json_obj");
-
-
-
-
                         }
                     }
                 }
-
-
             }
-        });
+        }); // end of scroll listener
 
         return view;
     }
