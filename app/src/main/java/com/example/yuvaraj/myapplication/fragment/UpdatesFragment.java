@@ -39,35 +39,33 @@ import java.util.List;
 
 public class UpdatesFragment extends Fragment {
 
+    // Declarations
+
     RecyclerView mRecyclerView;
     RecyclerUpdateAdapter adapter;
     ArrayList<Model> updateArrayList;
-    private static final long NOW = new Date().getTime();
     SimpleDateFormat sdf  = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
     ProgressDialog progressDialog;
     boolean loading;
     int pastVisiblesItems, visibleItemCount, totalItemCount;
     LinearLayoutManager mLayoutManager;
     boolean userScrolled = false;
-    VolleyHelper volleyHelper = new VolleyHelper();
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Initialize array list
         updateArrayList = new ArrayList<>();
 
+        // Show progress dialog loading
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setTitle("Loading");
         progressDialog.setMessage("Please wait...");
         progressDialog.show();
 
-
         // make json array request
-
-        volleyHelper.makeJsonArrayRequest(getActivity(), Constant.updates_url, new VolleyHelper.VolleyArrayResponseListener() {
+        VolleyHelper.makeJsonArrayRequest(getActivity(), Constant.updates_url, new VolleyHelper.VolleyArrayResponseListener() {
 
             @Override
             public void onResponse(JSONArray response) {
@@ -97,11 +95,6 @@ public class UpdatesFragment extends Fragment {
 
             @Override
             public void onError(VolleyError error) {
-
-                VolleyLog.d("tt", "Error: " + error.getMessage());
-                VolleyLog.d("TA", "error msg" + error.networkResponse);
-                Log.d("track", "Error");
-
                 if (error.networkResponse == null) {
                     Log.d("track", "Time out");
                 }
@@ -134,7 +127,8 @@ public class UpdatesFragment extends Fragment {
             }
 
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+            {
                 if (dy > 0) //check for scroll down
                 {
                     visibleItemCount = mLayoutManager.getChildCount();
@@ -151,7 +145,7 @@ public class UpdatesFragment extends Fragment {
 
                             // make json array request
 
-                            volleyHelper.makeJsonArrayRequest(getActivity(), Constant.updates_url, new VolleyHelper.VolleyArrayResponseListener() {
+                            VolleyHelper.makeJsonArrayRequest(getActivity(), Constant.updates_url, new VolleyHelper.VolleyArrayResponseListener() {
 
                                 @Override
                                 public void onResponse(JSONArray response) {
