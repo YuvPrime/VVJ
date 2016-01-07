@@ -13,19 +13,13 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.Toast;
 
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.yuvaraj.myapplication.Constant;
 import com.example.yuvaraj.myapplication.R;
 import com.example.yuvaraj.myapplication.adapter.RecyclerUpdateAdapter;
 import com.example.yuvaraj.myapplication.decorator.VerticalSpaceItemDecoration;
 import com.example.yuvaraj.myapplication.helpers.VolleyHelper;
 import com.example.yuvaraj.myapplication.model.Model;
-import com.example.yuvaraj.myapplication.volley.AppController;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,12 +29,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class UpdatesFragment extends Fragment {
 
     // Declarations
-
     RecyclerView mRecyclerView;
     RecyclerUpdateAdapter adapter;
     ArrayList<Model> updateArrayList;
@@ -50,6 +42,8 @@ public class UpdatesFragment extends Fragment {
     int pastVisiblesItems, visibleItemCount, totalItemCount;
     LinearLayoutManager mLayoutManager;
     boolean userScrolled = false;
+
+    int page = 1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -127,8 +121,7 @@ public class UpdatesFragment extends Fragment {
             }
 
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
-            {
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 if (dy > 0) //check for scroll down
                 {
                     visibleItemCount = mLayoutManager.getChildCount();
@@ -145,7 +138,7 @@ public class UpdatesFragment extends Fragment {
 
                             // make json array request
 
-                            VolleyHelper.makeJsonArrayRequest(getActivity(), Constant.updates_url, new VolleyHelper.VolleyArrayResponseListener() {
+                            VolleyHelper.makeJsonArrayRequest(getActivity(), Constant.updates_url + "?page=" + (++page), new VolleyHelper.VolleyArrayResponseListener() {
 
                                 @Override
                                 public void onResponse(JSONArray response) {
@@ -155,21 +148,25 @@ public class UpdatesFragment extends Fragment {
                                         updateArrayList.remove(updateArrayList.size() - 1);
                                         adapter.notifyItemRemoved(updateArrayList.size());
 
-                                        for (int i = 0; i < response.length(); i++) {
-                                            Model updateModel = new Model();
-                                            JSONObject object = response.getJSONObject(i);
-                                            updateModel.setContent(object.getString("content"));
-                                            updateModel.setImage(object.getString("image"));
-                                            Date date = null;
-                                            long timeInMillisSinceEpoch = 0;
-                                            try {
-                                                date = sdf.parse(object.getString("created"));
-                                                timeInMillisSinceEpoch = date.getTime();
-                                            } catch (ParseException e) {
-                                                e.printStackTrace();
+                                        if (response.length() == 0) {
+                                            Toast.makeText(getActivity(), "You reached the end!", Toast.LENGTH_LONG).show();
+                                        } else {
+                                            for (int i = 0; i < response.length(); i++) {
+                                                Model updateModel = new Model();
+                                                JSONObject object = response.getJSONObject(i);
+                                                updateModel.setContent(object.getString("content"));
+                                                updateModel.setImage(object.getString("image"));
+                                                Date date = null;
+                                                long timeInMillisSinceEpoch = 0;
+                                                try {
+                                                    date = sdf.parse(object.getString("created"));
+                                                    timeInMillisSinceEpoch = date.getTime();
+                                                } catch (ParseException e) {
+                                                    e.printStackTrace();
+                                                }
+                                                updateModel.setDatePosted(timeInMillisSinceEpoch);
+                                                updateArrayList.add(updateModel);
                                             }
-                                            updateModel.setDatePosted(timeInMillisSinceEpoch);
-                                            updateArrayList.add(updateModel);
                                         }
                                     } catch (JSONException e) {
                                         e.printStackTrace();
