@@ -112,6 +112,8 @@ public class UpdatesFragment extends Fragment {
         mRecyclerView.setAdapter(adapter);
 
 
+
+
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -131,7 +133,7 @@ public class UpdatesFragment extends Fragment {
                     // proceed if not already loading
                     if (!loading) {
 
-                        if ((visibleItemCount + pastVisiblesItems + 1) >= totalItemCount && userScrolled) {
+                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount && userScrolled) {
                             updateArrayList.add(null);
                             adapter.notifyItemInserted(updateArrayList.size());
                             loading = true; // set loading to true to prevent concurrent too many load
@@ -179,6 +181,7 @@ public class UpdatesFragment extends Fragment {
                                 public void onError(VolleyError error) {
                                     if (error.networkResponse == null) {
                                         Log.d("track", "Time out");
+                                        page--;
                                     }
                                 }
                             });

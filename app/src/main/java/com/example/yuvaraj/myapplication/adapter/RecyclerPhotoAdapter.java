@@ -1,18 +1,15 @@
 package com.example.yuvaraj.myapplication.adapter;
 
 import android.content.Context;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.yuvaraj.myapplication.Constant;
 import com.example.yuvaraj.myapplication.R;
-import com.example.yuvaraj.myapplication.fragment.PhotosFragment;
 import com.example.yuvaraj.myapplication.model.Model;
 import com.squareup.picasso.Picasso;
 
@@ -30,7 +27,7 @@ public class RecyclerPhotoAdapter extends RecyclerView.Adapter<RecyclerPhotoAdap
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_row_photos, null);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_row_album, null);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }

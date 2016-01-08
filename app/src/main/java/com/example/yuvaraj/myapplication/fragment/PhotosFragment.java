@@ -19,7 +19,6 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.yuvaraj.myapplication.Constant;
 import com.example.yuvaraj.myapplication.MainActivity;
 import com.example.yuvaraj.myapplication.R;
-import com.example.yuvaraj.myapplication.adapter.RecyclerGalleryAdapter;
 import com.example.yuvaraj.myapplication.adapter.RecyclerPhotoAdapter;
 import com.example.yuvaraj.myapplication.decorator.GridSpacingItemDecorator;
 import com.example.yuvaraj.myapplication.model.Model;
@@ -117,7 +116,7 @@ public class PhotosFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_photos, container, false);
+        View view = inflater.inflate(R.layout.fragment_album, container, false);
 
         mRecyclerView = (RecyclerView)view.findViewById(R.id.photos);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));

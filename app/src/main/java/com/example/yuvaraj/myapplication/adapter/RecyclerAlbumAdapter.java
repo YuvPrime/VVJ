@@ -3,7 +3,6 @@ package com.example.yuvaraj.myapplication.adapter;
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +37,7 @@ public class RecyclerAlbumAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         if (viewType == 1)
         {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_row_photos, null);
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_row_album, null);
             vh = new AlbumHolder(view);
         }
         else if (viewType == 2)
@@ -59,7 +58,7 @@ public class RecyclerAlbumAdapter extends RecyclerView.Adapter<RecyclerView.View
             Picasso.with(mContext)
                     .load(Constant.site_url + image)
                     .placeholder(R.color.grey)
-                    .into(((AlbumHolder)holder).image);
+                    .into(((AlbumHolder) holder).image);
 
         }
         else if (holder instanceof ProgressViewHolder)
