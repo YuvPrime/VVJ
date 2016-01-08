@@ -138,8 +138,6 @@ public class RecyclerUpdateAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 return 1;
             }
         }
-
-
     }
 
     public class UpdateOnlyHolder extends RecyclerView.ViewHolder {
