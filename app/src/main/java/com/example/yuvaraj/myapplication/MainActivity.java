@@ -10,7 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.yuvaraj.myapplication.fragment.GalleryFragment;
+import com.example.yuvaraj.myapplication.fragment.AlbumFragment;
 import com.example.yuvaraj.myapplication.fragment.UpdatesFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_photos) {
 
-            GalleryFragment fragment = new GalleryFragment();
+            AlbumFragment fragment = new AlbumFragment();
             android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.frame_container,fragment);
             fragmentTransaction.addToBackStack(null);
