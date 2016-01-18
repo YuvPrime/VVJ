@@ -67,8 +67,8 @@ public class RecyclerPhotoAdapter extends RecyclerView.Adapter<RecyclerPhotoAdap
 
         public ViewHolder(View itemView) {
             super(itemView);
-            this.name = (TextView)itemView.findViewById(R.id.content);
-            image = (ImageView)itemView.findViewById(R.id.image);
+            this.name = (TextView)itemView.findViewById(R.id.title);
+            image = (ImageView)itemView.findViewById(R.id.thumbnail);
             image.setOnClickListener(this);
         }
 

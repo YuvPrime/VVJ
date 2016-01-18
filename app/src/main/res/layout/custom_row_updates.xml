@@ -26,22 +26,22 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:id="@+id/image"
+                android:layout_height="wrap_content"
+                android:id="@+id/thumbnail"
                 android:src="#85656565"
                 android:layout_marginTop="10dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                android:layout_below="@+id/content" />
+                android:layout_below="@+id/title" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="This is just a random text that will be changed dynamically. It&apos;s static now but will be update dynamically later"
-                android:id="@+id/content"
+                android:id="@+id/title"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
 
@@ -53,7 +53,7 @@
                 android:textSize="13sp"
                 android:textColor="@color/grey"
                 android:id="@+id/postedDate"
-                android:layout_below="@+id/image"
+                android:layout_below="@+id/thumbnail"
                 android:layout_marginTop="16dp"
                 android:paddingBottom="15dp"/>
 

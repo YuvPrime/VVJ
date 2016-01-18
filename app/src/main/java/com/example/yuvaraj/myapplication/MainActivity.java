@@ -11,7 +11,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.yuvaraj.myapplication.fragment.AlbumFragment;
+import com.example.yuvaraj.myapplication.fragment.ArticlesFragment;
 import com.example.yuvaraj.myapplication.fragment.UpdatesFragment;
+import com.example.yuvaraj.myapplication.fragment.VideosFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -40,7 +42,7 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }else if(getSupportFragmentManager().getBackStackEntryCount() != 0) {
-            getSupportFragmentManager().popBackStack();
+            getSupportFragmentManager().popBackStack(null,getSupportFragmentManager().POP_BACK_STACK_INCLUSIVE);
         } else {
             super.onBackPressed();
         }
@@ -81,6 +83,7 @@ public class MainActivity extends AppCompatActivity
             UpdatesFragment fragment = new UpdatesFragment();
             android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.frame_container,fragment);
+            fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
 
         } else if (id == R.id.nav_photos) {
@@ -93,6 +96,22 @@ public class MainActivity extends AppCompatActivity
 
 
         } else if (id == R.id.nav_videos) {
+
+            VideosFragment fragment = new VideosFragment();
+            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.frame_container,fragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+
+        }
+
+        else if(id == R.id.nav_articles) {
+
+            ArticlesFragment fragment = new ArticlesFragment();
+            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.frame_container,fragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
 
         }
 

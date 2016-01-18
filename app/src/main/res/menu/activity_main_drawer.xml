@@ -6,24 +6,28 @@
             android:title="Home" android:checked="true" />
         <item android:id="@+id/nav_updates" android:icon="@android:drawable/ic_menu_gallery"
             android:title="Updates" />
-        <item android:id="@+id/nav_photos" android:icon="@android:drawable/ic_menu_slideshow"
+        <item android:id="@+id/nav_photos" android:icon="@android:drawable/ic_menu_gallery"
             android:title="Photos" />
-        <item android:id="@+id/nav_videos" android:icon="@android:drawable/ic_menu_manage"
+        <item android:id="@+id/nav_videos" android:icon="@android:drawable/ic_menu_upload"
             android:title="Videos" />
+        <item android:id="@+id/nav_articles" android:icon="@android:drawable/ic_menu_info_details"
+            android:title="Articles" />
     </group>
 
 
-    <item android:title="Magazines and NewsPaper">
+    <item android:title="Magazines &amp; NewsPaper">
 
         <menu>
             <group android:checkableBehavior="single">
 
             <item android:id="@+id/nav_newspaper" android:icon="@android:drawable/ic_menu_camera"
-            android:title="NewsPaper" />
+            android:title="Newspaper" />
         <item android:id="@+id/nav_magazine" android:icon="@android:drawable/ic_menu_gallery"
             android:title="Magazine" />
        </group>
         </menu>
     </item>
+
+
 
 </menu>

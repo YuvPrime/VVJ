@@ -6,6 +6,8 @@ public class Constant {
     public static String updates_url = site_url + "updates/lists";
     public static String image_path = site_url + "assets/images/";
     public static String gallery_url = site_url + "gallery/lists";
+    public static String videos_url = site_url + "videos/lists";
+    public static String articles_url = site_url + "articles/lists";
 
     // Php Application URL to store Reg ID created
     static final String APP_SERVER_URL = "http://webservice.site90.net/gcm.php?shareRegId=true";

@@ -2,7 +2,6 @@ package com.example.yuvaraj.myapplication.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.SpannableString;
@@ -14,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.example.yuvaraj.myapplication.Constant;
 import com.example.yuvaraj.myapplication.R;
 import com.example.yuvaraj.myapplication.model.Model;
@@ -22,7 +20,6 @@ import com.github.curioustechizen.ago.RelativeTimeTextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -147,7 +144,7 @@ public class RecyclerUpdateAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         public UpdateOnlyHolder(View itemView) {
             super(itemView);
-            this.content = (TextView)itemView.findViewById(R.id.content);
+            this.content = (TextView)itemView.findViewById(R.id.title);
             posted_date = (RelativeTimeTextView)itemView.findViewById(R.id.postedDate);
         }
     }
@@ -160,9 +157,9 @@ public class RecyclerUpdateAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         public UpdateWithImageHolder(View itemView) {
             super(itemView);
-            this.content = (TextView)itemView.findViewById(R.id.content);
+            this.content = (TextView)itemView.findViewById(R.id.title);
             posted_date = (RelativeTimeTextView)itemView.findViewById(R.id.postedDate);
-            image = (ImageView)itemView.findViewById(R.id.image);
+            image = (ImageView)itemView.findViewById(R.id.thumbnail);
         }
     }
 
