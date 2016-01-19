@@ -128,7 +128,7 @@ public class VideosFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration(8));
+        mRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration(30));
         adapter = new RecyclerVideoAdapter(getActivity(), videosList);
         mRecyclerView.setAdapter(adapter);
         

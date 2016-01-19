@@ -76,7 +76,7 @@ public class RecyclerUpdateAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             int updateCount = position;
             String staticUpdateCount = "<font color=\"#FF4081\">Update #" +(++updateCount) + " : " + "</font>";
 
-            ((UpdateOnlyHolder)holder).content.setText(Html.fromHtml(staticUpdateCount +updates.get(position).getContent() ));
+            ((UpdateOnlyHolder)holder).content.setText(updates.get(position).getContent());
             ((UpdateOnlyHolder)holder).posted_date.setReferenceTime(updates.get(position).getDatePosted());
         }
         else if (holder instanceof UpdateWithImageHolder)
@@ -90,7 +90,7 @@ public class RecyclerUpdateAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             int updateCount = position;
             String staticUpdateCount = "<font color=\"#FF4081\">Update #" +(++updateCount) + " : " + "</font>";
 
-            ((UpdateWithImageHolder)holder).content.setText(Html.fromHtml(staticUpdateCount +updates.get(position).getContent() ));
+            ((UpdateWithImageHolder)holder).content.setText(updates.get(position).getContent());
             ((UpdateWithImageHolder)holder).posted_date.setReferenceTime(updates.get(position).getDatePosted());
             String image = updates.get(position).getImage();
             if (!image.isEmpty())

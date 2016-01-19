@@ -5,9 +5,12 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.yuvaraj.myapplication.Constant;
 import com.example.yuvaraj.myapplication.R;
+import com.squareup.picasso.Picasso;
 
 public class ArticleActivity extends AppCompatActivity {
 
@@ -15,6 +18,7 @@ public class ArticleActivity extends AppCompatActivity {
     Bundle bundle;
     Toolbar toolbar;
     TextView title, content;
+    ImageView image;
 
 
     @Override
@@ -23,8 +27,8 @@ public class ArticleActivity extends AppCompatActivity {
         setContentView(R.layout.article_activity);
 
         title = (TextView)findViewById(R.id.title);
-         content = (TextView)findViewById(R.id.content);
-
+        content = (TextView)findViewById(R.id.content);
+        image = (ImageView)findViewById(R.id.image);
 
         bundle = getIntent().getExtras();
         title_b = bundle.getString("title");
@@ -33,6 +37,10 @@ public class ArticleActivity extends AppCompatActivity {
 
         title.setText(title_b);
         content.setText(content_b);
+
+        Picasso.with(ArticleActivity.this)
+                .load(Constant.image_path + "updates/" + "b.jpg")
+                .into(image);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

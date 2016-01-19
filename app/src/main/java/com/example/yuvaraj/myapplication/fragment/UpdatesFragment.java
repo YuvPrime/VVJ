@@ -107,7 +107,7 @@ public class UpdatesFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration(8));
+//        mRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration(25));
         adapter = new RecyclerUpdateAdapter(getActivity(), updateArrayList);
         mRecyclerView.setAdapter(adapter);
 
