@@ -1,6 +1,9 @@
 package com.example.yuvaraj.myapplication.model;
 
-public class PhotoModel {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class PhotoModel implements Parcelable  {
 
     String description, image;
     long datePosted;
@@ -37,4 +40,37 @@ public class PhotoModel {
     public void setDatePosted(long datePosted) {
         this.datePosted = datePosted;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.description);
+        dest.writeString(this.image);
+        dest.writeLong(this.datePosted);
+        dest.writeInt(this.galleryId);
+    }
+
+    public PhotoModel() {
+    }
+
+    protected PhotoModel(Parcel in) {
+        this.description = in.readString();
+        this.image = in.readString();
+        this.datePosted = in.readLong();
+        this.galleryId = in.readInt();
+    }
+
+    public static final Creator<PhotoModel> CREATOR = new Creator<PhotoModel>() {
+        public PhotoModel createFromParcel(Parcel source) {
+            return new PhotoModel(source);
+        }
+
+        public PhotoModel[] newArray(int size) {
+            return new PhotoModel[size];
+        }
+    };
 }
