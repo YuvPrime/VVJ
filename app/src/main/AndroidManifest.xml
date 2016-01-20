@@ -23,6 +23,10 @@
     <uses-permission android:name="android.permission.VIBRATE" />
 
 
+    <!-- SET Wallpaper Permission -->
+
+    <uses-permission android:name="android.permission.SET_WALLPAPER"/>
+
     <!-- Register Broadcast receiver -->
 
     <receiver
@@ -66,8 +70,12 @@
 
         <activity android:name=".activity.PhotosActivity"
             android:theme="@style/AppTheme.NoActionBar">
-
         </activity>
+
+        <activity android:name=".activity.FullScreenViewActivity"
+            android:theme="@style/MyThemeOverlay">
+        </activity>
+
 
     </application>
 
