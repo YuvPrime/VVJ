@@ -1,6 +1,9 @@
 package com.example.yuvaraj.myapplication.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +14,8 @@ import android.widget.TextView;
 
 import com.example.yuvaraj.myapplication.Constant;
 import com.example.yuvaraj.myapplication.R;
+import com.example.yuvaraj.myapplication.activity.FullScreenViewActivity;
+import com.example.yuvaraj.myapplication.helpers.DataWrapper;
 import com.example.yuvaraj.myapplication.model.PhotoModel;
 import com.squareup.picasso.Picasso;
 
@@ -68,7 +73,11 @@ public class RecyclerPhotoAdapter extends RecyclerView.Adapter<RecyclerPhotoAdap
 
         @Override
         public void onClick(View view) {
-
+            int position = getLayoutPosition();
+            Intent i = new Intent(mContext, FullScreenViewActivity.class);
+            i.putExtra("position", position);
+            i.putParcelableArrayListExtra("photos", (ArrayList<? extends Parcelable>) photosList);
+            mContext.startActivity(i);
         }
     }
 }
