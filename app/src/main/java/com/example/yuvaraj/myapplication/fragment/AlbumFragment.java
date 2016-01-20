@@ -75,6 +75,7 @@ public class AlbumFragment extends Fragment {
                         photosModel.setContent(object.getString("name"));
                         photosModel.setImage(object.getString("image"));
                         photosModel.setGallery_id(object.getInt("id"));
+                        photosModel.setTotal(object.getInt("total"));
 
                         Date date = null;
                         long timeInMillisSinceEpoch = 0;

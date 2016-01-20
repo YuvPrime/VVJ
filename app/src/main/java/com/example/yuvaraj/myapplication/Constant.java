@@ -6,6 +6,7 @@ public class Constant {
     public static String updates_url = site_url + "updates/lists";
     public static String image_path = site_url + "assets/images/";
     public static String gallery_url = site_url + "gallery/lists";
+    public static String photos_url = site_url + "photos/lists/";
     public static String videos_url = site_url + "videos/lists";
     public static String articles_url = site_url + "articles/lists";
 

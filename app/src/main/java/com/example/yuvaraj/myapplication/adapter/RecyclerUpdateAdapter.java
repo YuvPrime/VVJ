@@ -3,7 +3,6 @@ package com.example.yuvaraj.myapplication.adapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
@@ -159,7 +158,7 @@ public class RecyclerUpdateAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             super(itemView);
             this.content = (TextView)itemView.findViewById(R.id.title);
             posted_date = (RelativeTimeTextView)itemView.findViewById(R.id.postedDate);
-            image = (ImageView)itemView.findViewById(R.id.thumbnail);
+            image = (ImageView)itemView.findViewById(R.id.image);
         }
     }
 

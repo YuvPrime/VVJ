@@ -27,7 +27,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/thumbnail"
+                android:id="@+id/image"
                 android:src="#85656565"
                 android:layout_marginTop="20dp"
                 android:layout_alignParentLeft="true"
@@ -54,7 +54,7 @@
                 android:text="3 hours ago"
                 android:textSize="13sp"
                 android:id="@+id/postedDate"
-                android:layout_below="@+id/thumbnail"
+                android:layout_below="@+id/image"
                 android:layout_marginTop="16dp"
                 android:paddingBottom="25dp"/>
 

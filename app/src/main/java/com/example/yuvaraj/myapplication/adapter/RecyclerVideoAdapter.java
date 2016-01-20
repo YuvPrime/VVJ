@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.yuvaraj.myapplication.R;
-import com.example.yuvaraj.myapplication.activity.ArticleActivity;
 import com.example.yuvaraj.myapplication.model.VideoModel;
 import com.github.curioustechizen.ago.RelativeTimeTextView;
 import com.squareup.picasso.Picasso;
@@ -64,7 +63,7 @@ public class RecyclerVideoAdapter extends RecyclerView.Adapter<RecyclerVideoAdap
         public ViewHolder(View itemView) {
             super(itemView);
             this.title = (TextView)itemView.findViewById(R.id.title);
-            thumbnail = (ImageView)itemView.findViewById(R.id.thumbnail);
+            thumbnail = (ImageView)itemView.findViewById(R.id.image);
             posted_date = (RelativeTimeTextView)itemView.findViewById(R.id.postedDate);
             itemView.setOnClickListener(this);
         }

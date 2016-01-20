@@ -1,6 +1,7 @@
 package com.example.yuvaraj.myapplication.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +11,7 @@ import android.widget.TextView;
 
 import com.example.yuvaraj.myapplication.Constant;
 import com.example.yuvaraj.myapplication.R;
-import com.example.yuvaraj.myapplication.model.Model;
+import com.example.yuvaraj.myapplication.model.PhotoModel;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -18,16 +19,19 @@ import java.util.ArrayList;
 public class RecyclerPhotoAdapter extends RecyclerView.Adapter<RecyclerPhotoAdapter.ViewHolder> {
 
     private Context mContext;
-    ArrayList<Model> updates = new ArrayList<>();
+    ArrayList<PhotoModel> photosList = new ArrayList<>();
+    GridLayoutManager gridLayoutManager;
 
-    public RecyclerPhotoAdapter(Context context, ArrayList<Model> updates) {
-        this.updates = updates;
+
+    public RecyclerPhotoAdapter(Context context, ArrayList<PhotoModel> photosList, GridLayoutManager gridLayoutManager) {
+        this.photosList = photosList;
         this.mContext = context;
+        this.gridLayoutManager = gridLayoutManager;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_row_album, null);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_row_photos, null);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
@@ -35,40 +39,30 @@ public class RecyclerPhotoAdapter extends RecyclerView.Adapter<RecyclerPhotoAdap
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        holder.name.setText(updates.get(position).getContent());
-        String image = updates.get(position).getImage();
-        int gallery_id = updates.get(position).getGallery_id();
+        String image = photosList.get(position).getImage();
+        int gallery_id = photosList.get(position).getGalleryId();
 
         Picasso.with(mContext)
-                .load(Constant.image_path + "gallery/" + gallery_id + "/" + image)
-                .placeholder(R.drawable.loading)
+                .load(Constant.site_url + image)
+                .placeholder(R.color.grey)
                 .into(holder.image);
-
-//        Glide.with(mContext)
-//                .load(Constant.image_path + "gallery/" + gallery_id + "/" + image)
-//                .placeholder(R.drawable.loading)
-//                .centerCrop()
-//                .crossFade()
-//                .into(holder.image);
 
     }
 
     @Override
     public int getItemCount() {
-        return updates.size();
+        return photosList.size();
     }
 
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView name;
         ImageView image;
 
 
         public ViewHolder(View itemView) {
             super(itemView);
-            this.name = (TextView)itemView.findViewById(R.id.title);
-            image = (ImageView)itemView.findViewById(R.id.thumbnail);
+            image = (ImageView)itemView.findViewById(R.id.image);
             image.setOnClickListener(this);
         }
 

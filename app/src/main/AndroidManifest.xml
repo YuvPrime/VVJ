@@ -62,6 +62,10 @@
 
         <activity android:name=".activity.ArticleActivity"
              android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+        <activity android:name=".activity.PhotosActivity"
+            android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
 

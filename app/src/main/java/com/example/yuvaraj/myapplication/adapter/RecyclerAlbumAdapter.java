@@ -1,6 +1,7 @@
 package com.example.yuvaraj.myapplication.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,9 +10,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.yuvaraj.myapplication.Constant;
 import com.example.yuvaraj.myapplication.R;
+import com.example.yuvaraj.myapplication.activity.ArticleActivity;
+import com.example.yuvaraj.myapplication.activity.PhotosActivity;
 import com.example.yuvaraj.myapplication.model.Model;
 import com.squareup.picasso.Picasso;
 
@@ -54,6 +58,7 @@ public class RecyclerAlbumAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         if (holder instanceof AlbumHolder) {
             ((AlbumHolder)holder).name.setText(updates.get(position).getContent());
+            ((AlbumHolder)holder).total_photos.setText(updates.get(position).getTotal()+"");
             String image = updates.get(position).getImage();
             Picasso.with(mContext)
                     .load(Constant.site_url + image)
@@ -106,19 +111,25 @@ public class RecyclerAlbumAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     public class AlbumHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView name;
+        TextView name, total_photos;
         ImageView image;
 
         public AlbumHolder(View itemView) {
             super(itemView);
             this.name = (TextView)itemView.findViewById(R.id.title);
-            image = (ImageView)itemView.findViewById(R.id.thumbnail);
+            this.total_photos = (TextView)itemView.findViewById(R.id.total_photos);
+            image = (ImageView)itemView.findViewById(R.id.image);
             image.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             // handle click event here
+            int position = getLayoutPosition();
+            Intent intent = new Intent(mContext, PhotosActivity.class);
+            intent.putExtra("gallery_id", updates.get(position).getGallery_id());
+            intent.putExtra("image", updates.get(position).getImage());
+            mContext.startActivity(intent);
 
         }
     }
