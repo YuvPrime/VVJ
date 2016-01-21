@@ -11,7 +11,6 @@ import android.widget.Button;
 import com.example.yuvaraj.myapplication.Constant;
 import com.example.yuvaraj.myapplication.R;
 import com.example.yuvaraj.myapplication.adapter.FullScreenImageAdapter;
-import com.example.yuvaraj.myapplication.helpers.DataWrapper;
 import com.example.yuvaraj.myapplication.model.PhotoModel;
 
 import java.io.IOException;

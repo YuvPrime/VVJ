@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.example.yuvaraj.myapplication.Constant;
 import com.example.yuvaraj.myapplication.R;
 import com.example.yuvaraj.myapplication.activity.FullScreenViewActivity;
-import com.example.yuvaraj.myapplication.helpers.DataWrapper;
 import com.example.yuvaraj.myapplication.model.PhotoModel;
 import com.squareup.picasso.Picasso;
 

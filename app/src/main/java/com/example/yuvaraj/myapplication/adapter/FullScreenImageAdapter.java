@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.yuvaraj.myapplication.Constant;
 import com.example.yuvaraj.myapplication.R;
+import com.example.yuvaraj.myapplication.helpers.TouchImageView;
 import com.example.yuvaraj.myapplication.model.PhotoModel;
 import com.squareup.picasso.Picasso;
 
@@ -51,7 +52,7 @@ public class FullScreenImageAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        ImageView imgDisplay;
+        TouchImageView imgDisplay;
         LayoutInflater inflater;
 //        Button setAsWallpaper;
 
@@ -62,7 +63,7 @@ public class FullScreenImageAdapter extends PagerAdapter {
 
         itemPosition = position - 1;
 
-        imgDisplay = (ImageView) viewLayout.findViewById(R.id.image);
+        imgDisplay = (TouchImageView) viewLayout.findViewById(R.id.image);
 //        setAsWallpaper = (Button) viewLayout.findViewById(R.id.setAsWallpaper);
         Picasso.with(activity)
                 .load(Constant.site_url + photoList.get(position).getImage())
