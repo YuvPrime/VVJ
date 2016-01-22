@@ -15,15 +15,13 @@
     </group>
 
 
-    <item android:title="Magazines &amp; NewsPaper">
+    <item android:title="Cast &amp; Crew">
 
         <menu>
             <group android:checkableBehavior="single">
+            <item android:id="@+id/nav_cast_crew" android:icon="@android:drawable/ic_menu_camera"
+            android:title="Cast &amp; Crew" />
 
-            <item android:id="@+id/nav_newspaper" android:icon="@android:drawable/ic_menu_camera"
-            android:title="Newspaper" />
-        <item android:id="@+id/nav_magazine" android:icon="@android:drawable/ic_menu_gallery"
-            android:title="Magazine" />
        </group>
         </menu>
     </item>
