@@ -1,10 +1,13 @@
 package com.example.yuvaraj.myapplication.fragment;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +17,7 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.example.yuvaraj.myapplication.Constant;
+import com.example.yuvaraj.myapplication.NavDrawerInterface;
 import com.example.yuvaraj.myapplication.R;
 import com.example.yuvaraj.myapplication.adapter.RecyclerArticleAdapter;
 import com.example.yuvaraj.myapplication.adapter.RecyclerVideoAdapter;
@@ -47,6 +51,8 @@ public class ArticlesFragment extends Fragment {
     int page = 1;
     String youtubeThumbnail;
     String videoId, url = null;
+    NavDrawerInterface listener;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -106,6 +112,19 @@ public class ArticlesFragment extends Fragment {
         });
     }
 
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            listener = (NavDrawerInterface) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement NavDrawer");
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -118,6 +137,18 @@ public class ArticlesFragment extends Fragment {
         mRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration(15));
         adapter = new RecyclerArticleAdapter(getActivity(), articleList);
         mRecyclerView.setAdapter(adapter);
+
+        Toolbar toolbar = (Toolbar)view.findViewById(R.id.toolbar);
+        AppCompatActivity activity = ((AppCompatActivity) getActivity());
+        activity.setSupportActionBar(toolbar);
+
+        toolbar.setNavigationIcon(R.drawable.ic_menu);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.showNavDrawer();
+            }
+        });
         
         return view;
     }

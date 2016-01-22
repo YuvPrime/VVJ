@@ -1,11 +1,14 @@
 package com.example.yuvaraj.myapplication.fragment;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +19,7 @@ import android.widget.Toast;
 import com.android.volley.VolleyError;
 import com.example.yuvaraj.myapplication.Constant;
 import com.example.yuvaraj.myapplication.MainActivity;
+import com.example.yuvaraj.myapplication.NavDrawerInterface;
 import com.example.yuvaraj.myapplication.R;
 import com.example.yuvaraj.myapplication.adapter.RecyclerAlbumAdapter;
 import com.example.yuvaraj.myapplication.decorator.GridSpacingItemDecorator;
@@ -45,6 +49,7 @@ public class AlbumFragment extends Fragment {
     GridLayoutManager mLayoutManager;
     boolean loading;
     int pastVisiblesItems, visibleItemCount, totalItemCount;
+    NavDrawerInterface listener;
 
     int page = 1;
 
@@ -112,6 +117,19 @@ public class AlbumFragment extends Fragment {
 
     }
 
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            listener = (NavDrawerInterface) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement NavDrawer");
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_album, container, false);
@@ -120,6 +138,18 @@ public class AlbumFragment extends Fragment {
         mRecyclerView = (RecyclerView)view.findViewById(R.id.photos);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setHasFixedSize(true);
+
+        Toolbar toolbar = (Toolbar)view.findViewById(R.id.toolbar);
+        AppCompatActivity activity = ((AppCompatActivity) getActivity());
+        activity.setSupportActionBar(toolbar);
+
+        toolbar.setNavigationIcon(R.drawable.ic_menu);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.showNavDrawer();
+            }
+        });
 
         int spanCount = 2;
         int spacing = 20;

@@ -4,10 +4,13 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -15,6 +18,7 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.example.yuvaraj.myapplication.Constant;
+import com.example.yuvaraj.myapplication.NavDrawerInterface;
 import com.example.yuvaraj.myapplication.R;
 import com.example.yuvaraj.myapplication.adapter.RecyclerUpdateAdapter;
 import com.example.yuvaraj.myapplication.decorator.VerticalSpaceItemDecoration;
@@ -42,6 +46,7 @@ public class UpdatesFragment extends Fragment {
     int pastVisiblesItems, visibleItemCount, totalItemCount;
     LinearLayoutManager mLayoutManager;
     boolean userScrolled = false;
+    NavDrawerInterface listener;
 
     int page = 1;
 
@@ -103,11 +108,24 @@ public class UpdatesFragment extends Fragment {
     {
         View view = inflater.inflate(R.layout.fragment_updates, container, false);
 
+        Toolbar toolbar = (Toolbar)view.findViewById(R.id.toolbar);
+        AppCompatActivity activity = ((AppCompatActivity) getActivity());
+        activity.setSupportActionBar(toolbar);
+
+        toolbar.setNavigationIcon(R.drawable.ic_menu);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.showNavDrawer();
+            }
+        });
+
+
+
         mRecyclerView = (RecyclerView)view.findViewById(R.id.updates);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setHasFixedSize(true);
-//        mRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration(25));
         adapter = new RecyclerUpdateAdapter(getActivity(), updateArrayList);
         mRecyclerView.setAdapter(adapter);
 
@@ -192,5 +210,30 @@ public class UpdatesFragment extends Fragment {
         }); // end of scroll listener
 
         return view;
+    }
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            listener = (NavDrawerInterface) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement NavDrawer");
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+//        switch (item.getItemId())
+//        {
+//            case android.R.id.home:
+//                getActivity().;
+//        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
